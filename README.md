@@ -1,0 +1,7 @@
+# dotfiles
+
+## Setup
+
+```sh 
+stow .
+```

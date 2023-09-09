@@ -1,0 +1,11 @@
+{
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "git.openRepositoryInParentFolders": "always",
+    "update.showReleaseNotes": false,
+    "tabnine.experimentalAutoImports": true,
+    "workbench.iconTheme": "eq-material-theme-icons-darker",
+    "workbench.editor.enablePreview": false,
+    "security.workspace.trust.untrustedFiles": "open",
+}
