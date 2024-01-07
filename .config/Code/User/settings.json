@@ -8,4 +8,5 @@
     "workbench.iconTheme": "eq-material-theme-icons-darker",
     "workbench.editor.enablePreview": false,
     "security.workspace.trust.untrustedFiles": "open",
+    "workbench.colorTheme": "GitHub Dark Default",
 }
