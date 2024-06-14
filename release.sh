@@ -1,0 +1,1 @@
+stow --no-folding -t $HOME -S home
