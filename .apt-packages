@@ -1,7 +1,7 @@
 exa
 make
 gcc
-neovim
+# neovim
 # firefox 
 tmux
 # brave-browser
@@ -15,3 +15,4 @@ ripgrep
 stow
 vim
 zsh
+libgl1
