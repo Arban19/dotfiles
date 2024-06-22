@@ -125,7 +125,10 @@ alias sfi='fd --type f -H -d 1 | fzf | xargs echo -n | xclip -selection clipboar
 alias sd='cd $(fd --type d -H --exclude .git | fzf || dirname .)'                                    # [S]earch [D]irectories
 alias sdi='cd $(fd --type d -H -d 1 | fzf || dirname .)'                                             # [S]earch [D]irectories [I]n current directory
 alias si='fd -H -d 1 | fzf | xargs echo -n | xclip -selection clipboard'                             # [S]earch [I]n current directory
-alias p="python3"
+alias p="ipython"
+
+# Adding stuff to $PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # Z - jump around
 . ~/.local/bin/z.sh

@@ -284,7 +284,7 @@ require('lazy').setup({
   {
     'declancm/maximize.nvim',
     opts = {
-      default_keymaps = false,
+      -- default_keymaps = false,
     },
     config = function(_, opts)
       require('maximize').setup(opts)
@@ -551,6 +551,19 @@ vim.keymap.set('n', '<C-n>', "<cmd>NvimTreeToggle<CR>", { desc = 'Toggle nvimtre
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    -- Three things we might wanna ignore:
+    --   - The .git/ folder (we don't wanna ignore .git* like .github)
+    --   - The files/dirs listed in .gitignore. These seems to be ignored by all pickers' underlying tools (fzf, rg) even when we include hidden files
+    --   - The files/dirs starting with dot (aka hidden). These seem to be ignored by default, and to be configured per picker.
+    -- We want to include hidden files/dirs (check the pickers config below), but we still wanna ignore .git/ (a hidden dir)
+    file_ignore_patterns = {".git/"},
+
+    -- See `:help telescope.defaults.cache_picker`
+    cache_picker = {
+      num_pickers = 10,
+      limit_entries = 50,
+    },
+
     -- See `:help telescope.layout`
     layout_strategy = 'horizontal',
     layout_config = {
@@ -588,12 +601,24 @@ require('telescope').setup {
     },
   },
   pickers = {
-    find_files = { follow = true },
+    -- https://github.com/nvim-telescope/telescope.nvim/issues/855
+    live_grep = {
+      additional_args = {"--hidden"}
+    },
+    grep_string = {
+      additional_args = {"--hidden"}
+    },
+    find_files = {
+      follow = true,
+      hidden = true,
+    },
+    lsp_references = {
+      include_declaration = false
+    },
 
     -- https://github.com/nvim-telescope/telescope.nvim/issues/2368
-    lsp_definitions = { jump_type = 'vsplit' },
-    lsp_references = { jump_type = 'vsplit' },
-    lsp_implementations = { jump_type = 'vsplit' },
+    -- lsp_definitions = { jump_type = 'vsplit' },
+    -- lsp_implementations = { jump_type = 'vsplit' },
   },
   extensions = {
     file_browser = {
@@ -612,11 +637,11 @@ pcall(require('telescope').load_extension, 'luasnip')
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'Search [G]it [C]ommits' })
+vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches, { desc = 'Search [G]it [B]ranches' })
 vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Search [G]it [S]tatus' })
+vim.keymap.set('n', '<leader>si', require('telescope.builtin').git_files, { desc = '[S]earch g[I]t files' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sa', function() require('telescope.builtin').find_files({ hidden = true }) end, { desc = '[S]earch [A]ll files' })
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = '[S]earch [B]uffers' })
 vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
@@ -626,7 +651,9 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>sc', require('telescope.builtin').commands, { desc = '[S]earch [C]ommands' })
 vim.keymap.set('n', '<leader>so', require('telescope.builtin').command_history, { desc = '[S]earch [O]ld commands' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-vim.keymap.set('n', '<leader>sp', require('telescope').extensions.luasnip.luasnip, { desc = '[S]earch sni[P]pits' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').pickers, { desc = '[S]earch [P]ickers' })
+vim.keymap.set('n', '<leader>df', require('telescope.builtin').treesitter, { desc = '[D]ocument [F]ymbols (treesitter)' })
+vim.keymap.set('n', '<leader>sn', require('telescope').extensions.luasnip.luasnip, { desc = '[S]earch s[N]ippits' })
 vim.keymap.set('n', '<leader>fb', require('telescope').extensions.file_browser.file_browser, { desc = '[F]ile [B]rowser' })
 
 -- [[ Configure Treesitter ]]
@@ -759,14 +786,14 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = {},
+  -- pyright = {},
   -- clojure_lsp = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- denols = {
   --   autostart = false
   -- },
-  html = { filetypes = { 'html', 'twig', 'hbs'} },
+  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {

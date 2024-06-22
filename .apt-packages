@@ -10,7 +10,8 @@ curl
 fd-find
 fortune
 fzf
-python3-venv python3-pip
+python3-venv
+python3-pip
 ripgrep
 stow
 vim
