@@ -786,7 +786,7 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- clojure_lsp = {},
   -- rust_analyzer = {},
   -- tsserver = {},

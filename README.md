@@ -18,3 +18,4 @@ sh release.sh
 - [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md#ubuntu)
 - install nerd fonts
 - [sublime merge](https://www.sublimemerge.com/docs/linux_repositories#apt)
+- [node version manager](https://github.com/nvm-sh/nvm)
